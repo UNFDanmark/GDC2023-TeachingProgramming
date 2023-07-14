@@ -11,9 +11,11 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float turnSpeed = 1;
+    [SerializeField] private float jumpSpeed = 1;
 
     private float moveInput;
     private float turnInput;
+    private bool isOnGround;
     
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,11 @@ public class PlayerScript : MonoBehaviour
     {
         moveInput = Input.GetAxis("Vertical");
         turnInput = Input.GetAxis("Horizontal");
+        if (Input.GetButtonDown("Jump") && isOnGround)
+        {
+            body.velocity = Vector3.up * jumpSpeed;
+            isOnGround = false;
+        }
     }
 
     private void FixedUpdate()
@@ -34,5 +41,21 @@ public class PlayerScript : MonoBehaviour
         Vector3 moveVector = transform.forward * (speed * moveInput);
         moveVector.y = body.velocity.y;
         body.velocity = moveVector;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Jord"))
+        {
+            isOnGround = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Jord"))
+        {
+            isOnGround = false;
+        }
     }
 }
