@@ -9,6 +9,7 @@ public class VingummiScript : MonoBehaviour
     [SerializeField] private float rotationSpeed;
 
     public SpawnerScript sraliboBag;
+    public PointCounterScript pointCounter;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,8 @@ public class VingummiScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             sraliboBag.currentAmountOfGummies--;
+            pointCounter.points += 10000;
+            pointCounter.tmpText.text = "KCal: " + pointCounter.points;
             Destroy(gameObject);
         }
     }

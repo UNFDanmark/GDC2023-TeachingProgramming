@@ -10,6 +10,7 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField] private float spawnCooldown;
     [SerializeField] private int maxAmountOfGummies;
     [SerializeField] private Transform spawnArea;
+    [SerializeField] private PointCounterScript _pointCounterScript;
 
     private float timeLeftBetweenSpawns;
     public int currentAmountOfGummies;
@@ -28,7 +29,10 @@ public class SpawnerScript : MonoBehaviour
         {
             
             GameObject newGummy = Instantiate(gummyCoin,PositionRandomizer(),gummyCoin.transform.rotation);
-            newGummy.GetComponent<VingummiScript>().sraliboBag = this;
+            VingummiScript newGummyScript = newGummy.GetComponent<VingummiScript>();
+            newGummyScript.sraliboBag = this;
+            newGummyScript.pointCounter = _pointCounterScript;
+            
             timeLeftBetweenSpawns = spawnCooldown;
             currentAmountOfGummies ++;
         }
