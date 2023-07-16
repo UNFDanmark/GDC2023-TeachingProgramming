@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody body;
 
     [SerializeField] private GameObject bullet;
-
+    [SerializeField] Animator tankAnimator;
     [SerializeField] private Transform gunBarrel;
 
     [SerializeField] private float speed;
@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -36,6 +36,16 @@ public class PlayerScript : MonoBehaviour
     {
         moveInput = Input.GetAxis("Vertical");
         turnInput = Input.GetAxis("Horizontal");
+
+        // V1
+        if (moveInput != 0)
+        {
+            tankAnimator.SetBool("IsDriving", true);
+        }
+        else
+        {
+            tankAnimator.SetBool("IsDriving", false);
+        }
 
         timeLeftBetweenShots -= Time.deltaTime;
         
@@ -47,11 +57,18 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && timeLeftBetweenShots <= 0)
         {
+            tankAnimator.SetTrigger("Shoot");
+            AudioSource soundSource = gameObject.GetComponent<AudioSource>();
+            soundSource.timeSamples = (int)(soundSource.clip.frequency * 1.05f);
+            // soundSource.SetScheduledEndTime(1.63f);
+            soundSource.Play();
             GameObject newBullet = Instantiate(bullet,gunBarrel.position,transform.rotation);
             newBullet.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
             Destroy(newBullet,bulletLifeTime);
             timeLeftBetweenShots = cooldownTime;
         }
+        
+        
     }
 
     private void FixedUpdate()
