@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Thingy
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Antenne
+    m_Weight: 0
+  - m_Path: "Hjul_h\xF8jre00"
+    m_Weight: 0
+  - m_Path: "Hjul_h\xF8jre01"
+    m_Weight: 0
+  - m_Path: "Hjul_h\xF8jre02"
+    m_Weight: 0
+  - m_Path: "Hjul_h\xF8jre03"
+    m_Weight: 0
+  - m_Path: "Hjul_h\xF8jre04"
+    m_Weight: 0
+  - m_Path: "Hjul_h\xF8jre05"
+    m_Weight: 0
+  - m_Path: Hjul_venstre00
+    m_Weight: 0
+  - m_Path: Hjul_venstre01
+    m_Weight: 0
+  - m_Path: Hjul_venstre02
+    m_Weight: 0
+  - m_Path: Hjul_venstre03
+    m_Weight: 0
+  - m_Path: Hjul_venstre04
+    m_Weight: 0
+  - m_Path: Hjul_venstre05
+    m_Weight: 0
+  - m_Path: Skyder
+    m_Weight: 1

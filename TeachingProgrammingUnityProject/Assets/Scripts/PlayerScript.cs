@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] Animator tankAnimator;
     [SerializeField] private Transform gunBarrel;
+    [SerializeField] ParticleSystem gunParticles;
 
     [SerializeField] private float speed;
     [SerializeField] private float turnSpeed = 1;
@@ -20,6 +21,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float bulletSpeed = 9;
     [SerializeField] private float cooldownTime = .9f;
 
+    [SerializeField] public 
+        int playerNumber;
+    
     private float moveInput;
     private float turnInput;
     private bool isOnGround;
@@ -34,8 +38,23 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveInput = Input.GetAxis("Vertical");
-        turnInput = Input.GetAxis("Horizontal");
+        bool jumpHasBeenPressed = false;
+        bool fireButtonPressed = false;
+        if (playerNumber == 1)
+        {
+            moveInput = Input.GetAxis("VerticalSral");
+            turnInput = Input.GetAxis("HorizontalSral");
+            jumpHasBeenPressed = Input.GetButtonDown("Jump");
+            fireButtonPressed = Input.GetButtonDown("FireSral");
+        }
+        
+        if (playerNumber == 2)
+        {
+            moveInput = Input.GetAxis("VerticalRasl");
+            turnInput = Input.GetAxis("HorizontalRasl");
+            jumpHasBeenPressed = Input.GetButtonDown("Jump");
+            fireButtonPressed = Input.GetButtonDown("FireRasl");
+        }
 
         // V1
         if (moveInput != 0)
@@ -49,19 +68,25 @@ public class PlayerScript : MonoBehaviour
 
         timeLeftBetweenShots -= Time.deltaTime;
         
-        if (Input.GetButtonDown("Jump") && isOnGround)
+        if (jumpHasBeenPressed && isOnGround)
         {
             body.velocity = Vector3.up * jumpSpeed;
             isOnGround = false;
         }
 
-        if (Input.GetButtonDown("Fire1") && timeLeftBetweenShots <= 0)
+        if (fireButtonPressed && timeLeftBetweenShots <= 0)
         {
+            // animate
             tankAnimator.SetTrigger("Shoot");
+            
+            // sound
             AudioSource soundSource = gameObject.GetComponent<AudioSource>();
             soundSource.timeSamples = (int)(soundSource.clip.frequency * 1.05f);
-            // soundSource.SetScheduledEndTime(1.63f);
             soundSource.Play();
+            
+            // particle
+            gunParticles.Play();
+            
             GameObject newBullet = Instantiate(bullet,gunBarrel.position,transform.rotation);
             newBullet.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
             Destroy(newBullet,bulletLifeTime);

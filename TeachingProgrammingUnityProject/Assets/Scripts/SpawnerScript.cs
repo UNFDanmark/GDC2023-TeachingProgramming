@@ -31,7 +31,7 @@ public class SpawnerScript : MonoBehaviour
             GameObject newGummy = Instantiate(gummyCoin,PositionRandomizer(),gummyCoin.transform.rotation);
             VingummiScript newGummyScript = newGummy.GetComponent<VingummiScript>();
             newGummyScript.sraliboBag = this;
-            newGummyScript.pointCounter = _pointCounterScript;
+            newGummyScript.sralScore = _pointCounterScript;
             
             timeLeftBetweenSpawns = spawnCooldown;
             currentAmountOfGummies ++;
